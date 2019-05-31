@@ -8,23 +8,24 @@ class QuotesSpider(Spider):
     start_urls = ('https://www.researchgate.net/institution/California_State_University_Fullerton',)
  
     def parse(self, response):
-        token = response.xpath('//*[@name="Rg-Request-Token"]/@value').extract_first()
+        token = response.xpath('//*[@name="request_token"]/@value').extract_first()
         print(token)
         return FormRequest.from_response(response,
-                                         formdata={ 'rg-request-token':token,
+                                         formdata={ "request_token":token,
+                                                    "invalidPasswordCount":"0",
+                                                    'email': 'zz-sasharma@fullerton.edu', 
                                                     'password': '23811986',
-                                                    'username':'zz-sasharma@fullerton.edu'},
+                                                    "setLoginCookie":"yes"},
                                          callback=self.scrape_pages)
  
     def scrape_pages(self, response):
         
-        print("--------------------success------------------------")
+        print("--------------------SUCCESS------------------------")
         print(response)
-        open_in_browser(response)
+        #open_in_browser(response)
         
 
     # Complete your code here to scrape the pages that you are redirected to after logging in
 
     # ....
     # ....
-
